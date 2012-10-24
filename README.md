@@ -1,6 +1,14 @@
 mln-semantics
 =============
 
+Creating your own repository
+----------------------------
+
+First, fork this repository.  This will let you edit things as you see fit without affecting 
+the original code base.  Any new code that we want to include in the main respository can be done
+through pull requests.
+
+
 Set up workspace
 ----------------
 
