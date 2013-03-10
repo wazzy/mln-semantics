@@ -1,6 +1,7 @@
 \section{Background}
 
 \textbf{Textual entailment.}
+\index{Recognizing Textual Entailment}
 Recognizing Textual Entailment (RTE) is the task of determining whether one
 natural language text, the {\it premise}, implies another, the {\it hypothesis}.
 For evaluation of our system, we have chosen to use a variation on RTE in which
@@ -38,8 +39,10 @@ simply does not occur in the RTE corpora.  In order to properly test our
 phenomena, we construct hand-tailored premises and hypotheses based on
 real-world texts.
 
-
+\vspace{2mm}
 \textbf{Logic-based semantics.}
+\index{logical semantics}
+\index{Discourse Representation Theory}
 Boxer \citep{bos:coling2004} is a software package for wide-coverage semantic
 analysis that provides semantic representations in the form of Discourse
 Representation Structures \citep{kamp:book93}. It builds on the C\&C CCG parser
@@ -55,7 +58,9 @@ to check for logical entailment.
 % two to find an answer to the question.
 
 
-\noindent\textbf{Distributional models for lexical meaning.} Distributional
+\vspace{2mm}
+\noindent\textbf{Distributional models for lexical meaning.} 
+\index{distributional semantics} Distributional
 models describe the meaning of a word through the context in which it
 appears~\citep{landauer97:solution,lund96:producing}, where contexts can be
 documents, other words, or snippets of syntactic structure. Based on
@@ -73,7 +78,11 @@ representation for a word mixes all its usages (senses). For the paraphrase
 appropriateness task, these representations are then reweighted, extended, or
 filtered to focus on contextually appropriate usages.
 
+
+\vspace{2mm}
 \noindent\textbf{Markov Logic.} 
+\index{Markov logic}
+
 In order to perform logical inference with weights, we draw
 from the large and active body of work related to Statistical Relational AI
 \citep{getoor:book2007}.  Specifically, we make use of Markov Logic Networks
@@ -81,7 +90,7 @@ from the large and active body of work related to Statistical Relational AI
 represent first-order logical formulas. MLNs are appropriate for our approach
 because they provide an elegant method of assigning weights to first-order
 logical rules, combining a diverse set of inference rules, and performing
-probabilistic inference.
+probabilistic inference. \index{probabilistic inference}
 
 An MLN consists of a set of weighted first-order clauses.  It provides a way of
 softening first-order logic by making situations in which not all clauses are
