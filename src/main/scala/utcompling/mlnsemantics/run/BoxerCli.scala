@@ -1,8 +1,8 @@
 package utcompling.mlnsemantics.run
 
 import utcompling.mlnsemantics.modal.ModalDiscourseInterpreter
-import opennlp.scalabha.util.FileUtils
-import opennlp.scalabha.util.CollectionUtil._
+import dhg.util.FileUtil._
+import dhg.util.CollectionUtil._
 import utcompling.mlnsemantics.datagen.Tokenize
 import utcompling.scalalogic.discourse.candc.boxer.expression.BoxerExpression
 import utcompling.scalalogic.discourse.candc.boxer.expression.interpreter.BoxerExpressionInterpreter
@@ -56,7 +56,7 @@ object BoxerCli {
 
     opts.get("-f").foreach {
       filename =>
-        val sentences = FileUtils.readLines(filename).map(sepTokens).toList
+        val sentences = File(filename).readLines.map(sepTokens).toList
         for ((sentence, boxerOpt) <- sentences zipSafe di.batchInterpret(sentences)) {
           println(sentence)
           out(boxerOpt)

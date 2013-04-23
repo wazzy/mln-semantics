@@ -4,10 +4,11 @@ import utcompling.mlnsemantics.inference.support.WeightedExpression
 import utcompling.scalalogic.fol.expression._
 import utcompling.scalalogic.top.expression.Variable
 import scala.collection.mutable.Buffer
-import opennlp.scalabha.util.CollectionUtils._
-import opennlp.scalabha.util.CollectionUtil._
+import dhg.util.CollectionUtil._
 import support.HardWeightedExpression
 import utcompling.mlnsemantics.inference.support.SoftWeightedExpression
+import scalaz._
+import Scalaz._
 
 class ExistentialEliminatingProbabilisticTheoremProver(
   delegate: ProbabilisticTheoremProver[FolExpression])
@@ -52,7 +53,7 @@ class ExistentialEliminatingProbabilisticTheoremProver(
       }
 
     delegate.prove(
-      constants +++ (b.toSet.groupByKey: Map[String, Set[String]]),
+      constants |+| (b.to[Set].groupByKey: Map[String, Set[String]]),
       declarations,
       evidence,
       newAssumptions,

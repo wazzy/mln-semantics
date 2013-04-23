@@ -1,8 +1,8 @@
 package utcompling.mlnsemantics.vecspace
 
-import opennlp.scalabha.util.CollectionUtils._
-import opennlp.scalabha.util.CollectionUtil._
-import opennlp.scalabha.util.FileUtils._
+import dhg.util.CollectionUtil._
+import dhg.util.CollectionUtil._
+import dhg.util.FileUtil._
 import scala.collection.mutable.Buffer
 import scala.annotation.tailrec
 
@@ -12,7 +12,7 @@ object BowVectorSpace {
   }
 
   def apply(filename: String, filter: String => Boolean): Map[String, BowVector] = {
-    readLines(filename).map(_.split("\t")).flatMap {
+    File(filename).readLines.map(_.split("\t")).flatMap {
       case Array(word, vector @ _*) =>
         if (filter(word)) {
           val pairs =
@@ -39,9 +39,9 @@ class BowVector(val counts: Map[String, Double]) {
   }
 
   def cosine(other: BowVector) = {
-    val numer = (this zip other).sumBy { case ((_, t), (_, o)) => t * o }
-    val denom1 = math.sqrt(this.counts.sumBy { case (_, c) => c * c })
-    val denom2 = math.sqrt(other.counts.sumBy { case (_, c) => c * c })
+    val numer = (this zip other).map { case ((_, t), (_, o)) => t * o }.sum
+    val denom1 = math.sqrt(this.counts.map { case (_, c) => c * c }.sum)
+    val denom2 = math.sqrt(other.counts.map { case (_, c) => c * c }.sum)
     numer / (denom1 * denom2)
   }
 
@@ -70,7 +70,7 @@ class BowVector(val counts: Map[String, Double]) {
   }
 
   def zip2(other: BowVector): Map[String, (Double, Double)] = {
-    (this.counts.keySet ++ other.counts.keySet).mapTo(k => (this.counts.getOrElse(k, 0.), other.counts.getOrElse(k, 0.))).toMap
+    (this.counts.keySet ++ other.counts.keySet).mapTo(k => (this.counts.getOrElse(k, 0.0), other.counts.getOrElse(k, 0.0))).toMap
   }
 
   override def toString = "BowVector(%s)".format(counts.map { case (k, v) => "%s -> %s".format(k, v) }.mkString(", "))

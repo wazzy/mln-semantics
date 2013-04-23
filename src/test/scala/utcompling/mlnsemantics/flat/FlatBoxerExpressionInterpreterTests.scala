@@ -10,7 +10,7 @@ import utcompling.scalalogic.inference.impl.Prover9TheoremProver
 import utcompling.scalalogic.fol.expression._
 import utcompling.scalalogic.top.expression.Variable
 import utcompling.scalalogic.util.StringUtils._
-import opennlp.scalabha.util.FileUtils
+import dhg.util.FileUtil
 import utcompling.scalalogic.discourse.candc.boxer.expression.interpreter.BoxerExpressionInterpreter
 import org.junit.Test
 
@@ -36,8 +36,8 @@ class FlatBoxerExpressionInterpreterTests {
     if (false) {
       val boxerDiscourseInterpreter = new BoxerDiscourseInterpreter[BoxerExpression](
         new PassthroughBoxerExpressionInterpreter(),
-        CandcImpl.findBinary(Some(FileUtils.pathjoin(System.getenv("HOME"), "bin/candc/bin"))),
-        new BoxerImpl(FileUtils.pathjoin(System.getenv("HOME"), "bin/candc/bin/boxer")))
+        CandcImpl.findBinary(Some(FileUtil.pathjoin(System.getenv("HOME"), "bin/candc/bin"))),
+        new BoxerImpl(FileUtil.pathjoin(System.getenv("HOME"), "bin/candc/bin/boxer")))
       println(boxerDiscourseInterpreter.interpretMultisentence(List("Fido is a Dog and Fido did not walk .")))
       println(boxerDiscourseInterpreter.interpretMultisentence(List("A dog did not walk .")))
       return
@@ -56,7 +56,7 @@ class FlatBoxerExpressionInterpreterTests {
     def l(st: String*) = st.map(f).toList
     def d(st: String) = new Boxer2DrtExpressionInterpreter().interpret(p(st))
     def ss(st: String) = println(sideBySide(d(st).simplify.pretty, "   ", "\n" + ip(st).mkString("\n")) + "\n")
-    def tpo = new Prover9TheoremProver(FileUtils.pathjoin(System.getenv("HOME"), "bin/LADR-2009-11A/bin/prover9"), 5, false)
+    def tpo = new Prover9TheoremProver(FileUtil.pathjoin(System.getenv("HOME"), "bin/LADR-2009-11A/bin/prover9"), 5, false)
     def ftpo = new FlatTheoremProver(tpo, List(new FlatPredicateQuotingInterpreter, new FlatPredicateTypingInterpreter))
     def tp(a: String, g: String, v: Boolean = false) = {
       val (proof, visual) = ftpo.proveVisualize(ip(a), ih(g), v)

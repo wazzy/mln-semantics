@@ -4,7 +4,7 @@ import utcompling.scalalogic.inference.impl.Prover9TheoremProver
 import utcompling.scalalogic.discourse.candc.boxer.expression.interpreter.impl.Boxer2DrtExpressionInterpreter
 import utcompling.scalalogic.discourse.candc.boxer.expression.BoxerExpression
 import utcompling.mlnsemantics.modal.ModalDiscourseInterpreter
-import opennlp.scalabha.util.FileUtils
+import dhg.util.FileUtil
 import utcompling.scalalogic.fol.expression.FolExpression
 import utcompling.mlnsemantics.modal.ModalDiscourseInterpreter
 import utcompling.mlnsemantics.wordnet.WordnetImpl
@@ -98,7 +98,7 @@ object Baseline {
               //                }
               //              }))))
 
-              new Prover9TheoremProver(FileUtils.pathjoin(System.getenv("HOME"), "bin/LADR-2009-11A/bin/prover9"), 5, false)))))
+              new Prover9TheoremProver(FileUtil.pathjoin(System.getenv("HOME"), "bin/LADR-2009-11A/bin/prover9"), 5, false)))))
 
     //
     //

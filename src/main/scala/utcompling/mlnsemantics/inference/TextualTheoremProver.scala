@@ -6,10 +6,10 @@ import utcompling.scalalogic.discourse.candc.boxer.expression.parse.BoxerExpress
 import utcompling.scalalogic.discourse.candc.boxer.expression._
 import utcompling.mlnsemantics.modal.ModalDiscourseInterpreter
 import utcompling.scalalogic.discourse.candc.boxer.expression.interpreter.impl.OccurrenceMarkingBoxerExpressionInterpreterDecorator
-import opennlp.scalabha.util.FileUtils.pathjoin
-import opennlp.scalabha.util.FileUtils
-import opennlp.scalabha.util.CollectionUtils._
-import opennlp.scalabha.util.CollectionUtil._
+import dhg.util.FileUtil.pathjoin
+import dhg.util.FileUtil
+import dhg.util.CollectionUtil._
+import dhg.util.CollectionUtil._
 import utcompling.scalalogic.inference.TheoremProver
 import utcompling.scalalogic.discourse.candc.boxer.expression.interpreter.impl.MergingBoxerExpressionInterpreterDecorator
 import utcompling.scalalogic.discourse.candc.boxer.expression.interpreter.impl.UnnecessarySubboxRemovingBoxerExpressionInterpreter
@@ -82,7 +82,7 @@ class TextualTheoremProver(
             }
         }
       val predTypes = Map(name -> argTypes.reverse)
-      val constTypes = constants.toSet.groupByKey
+      val constTypes = constants.to[Set].groupByKey
       (predTypes, constTypes)
     }
 

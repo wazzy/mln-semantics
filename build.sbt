@@ -1,10 +1,10 @@
-import com.typesafe.startscript.StartScriptPlugin
+import com.typesafe.sbt.SbtStartScript
 
 name := "mln-semantics"
 
 version := "0.0.1"
 
-scalaVersion := "2.9.2"
+scalaVersion := "2.10.1"
 
 resolvers ++= Seq(
   "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots",
@@ -61,7 +61,7 @@ libraryDependencies ++= Seq(
 // END FOR SCRUNCH
 ////////////////////////////////////////////////////////
 
-seq(StartScriptPlugin.startScriptForClassesSettings: _*)
+seq(SbtStartScript.startScriptForClassesSettings: _*)
 
 mainClass in (Compile, run) := Some("utcompling.mlnsemantics.inference.Baseline")
 

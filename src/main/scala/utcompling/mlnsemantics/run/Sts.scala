@@ -4,11 +4,11 @@ import utcompling.scalalogic.inference.impl.Prover9TheoremProver
 import utcompling.scalalogic.discourse.candc.boxer.expression.interpreter.impl.Boxer2DrtExpressionInterpreter
 import utcompling.scalalogic.discourse.candc.boxer.expression.BoxerExpression
 import utcompling.mlnsemantics.modal.ModalDiscourseInterpreter
-import opennlp.scalabha.util.FileUtils
-import opennlp.scalabha.util.FileUtils._
-import opennlp.scalabha.util.CollectionUtils._
-import opennlp.scalabha.util.CollectionUtil._
-import opennlp.scalabha.util.Pattern.Range
+import dhg.util.FileUtil
+import dhg.util.FileUtil._
+import dhg.util.CollectionUtil._
+import dhg.util.Collections.UniversalSet
+import dhg.util.Pattern.Range
 import utcompling.scalalogic.fol.expression.FolExpression
 import utcompling.mlnsemantics.modal.ModalDiscourseInterpreter
 import utcompling.mlnsemantics.wordnet.WordnetImpl
@@ -70,7 +70,7 @@ object Sts {
 
   def main(args: Array[String]) {
     val (newArgs, optPairs) =
-      ("" +: args.toSeq).sliding2.foldLeft((Vector[String](), Vector[(String, String)]())) {
+      ("" +: args.toSeq).sliding(2).map { case Seq(x, y) => (x, y) }.foldLeft((Vector[String](), Vector[(String, String)]())) {
         case ((newArgs, opts), (a, b)) => a match {
           case _ if a.startsWith("-") => (newArgs, opts :+ (a -> b))
           case _ if b.startsWith("-") => (newArgs, opts)
@@ -86,26 +86,26 @@ object Sts {
 
     newArgs.toSeq match {
       case Seq("lem", stsFile, lemFile) =>
-        val sentences = readLines(stsFile).flatMap(_.split("\t")).toVector
+        val sentences = File(stsFile).readLines.flatMap(_.split("\t")).toVector
         val lemmatized = new CncLemmatizeCorpusMapper().parseToLemmas(sentences)
-        FileUtils.writeUsing(lemFile) { f =>
+        FileUtil.writeUsing(File(lemFile)) { f =>
           lemmatized
             .map(_.map(_.map(_._2).mkString(" ")).getOrElse("______parse_failed______"))
             .grouped(2).foreach { case Seq(a, b) => f.write("%s\t%s\n".format(a, b)) }
         }
 
       case Seq("vs", fullVsFile, lemFile, stsVsFile) =>
-        val allLemmas = readLines(lemFile).flatMap(_.split("\\s+")).toSet
-        FileUtils.writeUsing(stsVsFile) { f =>
-          for (line <- readLines(fullVsFile))
+        val allLemmas = File(lemFile).readLines.flatMap(_.split("\\s+")).toSet
+        FileUtil.writeUsing(File(stsVsFile)) { f =>
+          for (line <- File(fullVsFile).readLines)
             if (allLemmas(line.split("\\s+")(0)))
               f.write(line + "\n")
         }
 
       case Seq("box", stsFile, boxFile) =>
         val di = new ModalDiscourseInterpreter()
-        val sentences = readLines(stsFile).flatMap(_.split("\t")).map(sepTokens).toList
-        writeUsing(boxFile) { f =>
+        val sentences = File(stsFile).readLines.flatMap(_.split("\t")).map(sepTokens).toList
+        writeUsing(File(boxFile)) { f =>
           for (x <- di.batchInterpret(sentences))
             f.write(x + "\n")
         }
@@ -126,14 +126,14 @@ object Sts {
     def sepTokens(a: String) = Tokenize(a).mkString(" ")
 
     def run(stsFile: String, boxFile: String, vsFile: String, goldSimFile: String, outputSimFile: String, allLemmas: String => Boolean, includedPairs: Int => Boolean) {
-      val pairs = readLines(stsFile).map(_.split("\t")).map { case Array(a, b) => (a, b) }
+      val pairs = File(stsFile).readLines.map(_.split("\t")).map { case Array(a, b) => (a, b) }
 
       val boxPairs =
-        FileUtils.readLines(boxFile)
+        File(boxFile).readLines
           .map { case SomeRe(drsString) => Some(drsString); case "None" => None }
           .toList
           .grouped(2)
-      val goldSims = FileUtils.readLines(goldSimFile).map(_.toDouble)
+      val goldSims = File(goldSimFile).readLines.map(_.toDouble)
 
       def probOfEnt2simScore(p: Double) = p * 5
 
@@ -170,8 +170,8 @@ object Sts {
         }
 
       val (ps, golds) = results.map(_._2).unzip
-      println(ps.mkString("["," ","]"))
-      println(golds.mkString("["," ","]"))
+      println(ps.mkString("[", " ", "]"))
+      println(golds.mkString("[", " ", "]"))
     }
   }
 

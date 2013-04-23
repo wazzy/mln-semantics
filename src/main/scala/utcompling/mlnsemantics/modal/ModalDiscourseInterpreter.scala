@@ -14,9 +14,9 @@ import utcompling.scalalogic.discourse.candc.parse.output.impl._
 import scala.collection.mutable.ListBuffer
 import utcompling.mlnsemantics.polarity._
 import utcompling.scalalogic.util.SeqUtils
-import opennlp.scalabha.util.CollectionUtils._
-import opennlp.scalabha.util.CollectionUtil._
-import opennlp.scalabha.util.FileUtils
+import dhg.util.CollectionUtil._
+import dhg.util.CollectionUtil._
+import dhg.util.FileUtil
 import org.apache.commons.logging.LogFactory
 
 /**

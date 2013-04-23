@@ -10,7 +10,7 @@ import utcompling.scalalogic.inference.impl.Prover9TheoremProver
 import utcompling.scalalogic.fol.expression._
 import utcompling.scalalogic.top.expression.Variable
 import utcompling.scalalogic.util.StringUtils._
-import opennlp.scalabha.util.FileUtils
+import dhg.util.FileUtil
 import utcompling.scalalogic.discourse.candc.boxer.expression.interpreter.BoxerExpressionInterpreter
 import utcompling.scalalogic.discourse.candc.parse.output.impl.Discourse
 import utcompling.mlnsemantics.modal.ModalTestsData._
@@ -36,7 +36,7 @@ class ModalTests {
     //        def ss(drs: String, parse: Discourse) = {
     //            println(sideBySide(ds(drs).simplify.pretty, "   ", i(drs, parse).pretty))
     //        }
-    def tpo = new Prover9TheoremProver(FileUtils.pathjoin(System.getenv("HOME"), "bin/LADR-2009-11A/bin/prover9"), 5, false)
+    def tpo = new Prover9TheoremProver(FileUtil.pathjoin(System.getenv("HOME"), "bin/LADR-2009-11A/bin/prover9"), 5, false)
     def mtpo = new ModalTheoremProver(tpo)
     def vtpo = new VisualizingModalTheoremProverDecorator(mtpo)
     def vwtpo = new VisualizingModalTheoremProverDecorator(mtpo)

@@ -12,7 +12,7 @@ import utcompling.scalalogic.discourse.DiscourseInterpreter
 import utcompling.scalalogic.discourse.candc.boxer.expression.parse.BoxerExpressionParser
 import utcompling.scalalogic.discourse.candc.boxer.expression.interpreter.impl.MergingBoxerExpressionInterpreterDecorator
 import utcompling.scalalogic.discourse.candc.boxer.expression.interpreter.impl.Boxer2DrtExpressionInterpreter
-import opennlp.scalabha.util.FileUtils
+import dhg.util.FileUtil
 import org.junit.Test
 import utcompling.mlnsemantics.modal.ModalTestsData._
 
@@ -577,15 +577,15 @@ class ModalTestsData {
       if (true) { // Generate DRS
         val boxerDiscourseInterpreter = new BoxerDiscourseInterpreter[BoxerExpression](
           new PassthroughBoxerExpressionInterpreter(),
-          CandcImpl.findBinary(Some(FileUtils.pathjoin(System.getenv("HOME"), "bin/candc/bin"))),
-          new BoxerImpl(FileUtils.pathjoin(System.getenv("HOME"), "bin/candc/bin/boxer")))
+          CandcImpl.findBinary(Some(FileUtil.pathjoin(System.getenv("HOME"), "bin/candc/bin"))),
+          new BoxerImpl(FileUtil.pathjoin(System.getenv("HOME"), "bin/candc/bin/boxer")))
         val b = boxerDiscourseInterpreter.interpretMultisentence(List(s))
         println(b)
         println(new Boxer2DrtExpressionInterpreter().interpret(b).pretty)
       }
 
       if (true) { // Generate Parse
-        val candc = new CandcDiscourseParser(CandcImpl.findBinary(Some(FileUtils.pathjoin(System.getenv("HOME"), "bin/candc/bin"))))
+        val candc = new CandcDiscourseParser(CandcImpl.findBinary(Some(FileUtil.pathjoin(System.getenv("HOME"), "bin/candc/bin"))))
         println(candc.parseMultisentence(List(s)).repr)
       }
     }

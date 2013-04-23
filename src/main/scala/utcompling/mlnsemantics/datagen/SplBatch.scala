@@ -1,9 +1,9 @@
 package utcompling.mlnsemantics.datagen
 
 import scala.collection.JavaConversions._
-import opennlp.scalabha.util.FileUtils._
-import opennlp.scalabha.util.CollectionUtils._
-import opennlp.scalabha.util.FileUtils
+import dhg.util.FileUtil._
+import dhg.util.CollectionUtil._
+import dhg.util.FileUtil
 
 /**
  * Convert a sentence-per-line file into a file that has 'batchSize'
@@ -22,8 +22,8 @@ object SplBatch {
 //          f.write("%d\t%s\n".format(fileNum * sentencesPerFile.toInt + batchNum * batchSize.toInt + 1, batch.mkString("\t")))
 //      }
 
-      writeUsing(outputFile) { f =>
-        for ((batch, batchNum) <- FileUtils.readLines(inputFile).grouped(batchSize.toInt).zipWithIndex)
+      writeUsing(File(outputFile)) { f =>
+        for ((batch, batchNum) <- File(inputFile).readLines.grouped(batchSize.toInt).zipWithIndex)
           f.write("%d\t%s\n".format(batchNum * batchSize.toInt + 1, batch.mkString("\t")))
       }
 

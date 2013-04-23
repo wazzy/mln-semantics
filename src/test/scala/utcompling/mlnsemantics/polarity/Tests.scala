@@ -11,7 +11,7 @@ import utcompling.scalalogic.discourse.impl.BoxerDiscourseInterpreter
 import utcompling.scalalogic.discourse.candc.boxer.expression.interpreter.BoxerExpressionInterpreter
 import utcompling.scalalogic.discourse.candc.boxer.expression.interpreter.impl.Boxer2DrtExpressionInterpreter
 import utcompling.scalalogic.discourse.candc.call.impl._
-import opennlp.scalabha.util.FileUtils
+import dhg.util.FileUtil
 import org.junit.Test
 import org.junit.Test
 
@@ -24,10 +24,10 @@ class Tests {
     def f(s: String) = new FolLogicParser().parse(s)
 
     val discourseInterpreter = new BoxerDiscourseInterpreter[DrtExpression](
-      candc = CandcImpl.findBinary(Some(FileUtils.pathjoin(System.getenv("HOME"), "bin/candc"))),
-      boxer = BoxerImpl.findBinary(Some(FileUtils.pathjoin(System.getenv("HOME"), "bin/candc/bin/boxer"))))
+      candc = CandcImpl.findBinary(Some(FileUtil.pathjoin(System.getenv("HOME"), "bin/candc"))),
+      boxer = BoxerImpl.findBinary(Some(FileUtil.pathjoin(System.getenv("HOME"), "bin/candc/bin/boxer"))))
 
-    val prover = new Prover9TheoremProver(FileUtils.pathjoin(System.getenv("HOME"), "bin/LADR-2009-11A/bin/prover9"), 5, false)
+    val prover = new Prover9TheoremProver(FileUtil.pathjoin(System.getenv("HOME"), "bin/LADR-2009-11A/bin/prover9"), 5, false)
     def tp(a: DrtExpression, g: DrtExpression, s: List[FolExpression] = List()) =
       prover.prove(a.fol +: s, g.fol).isDefined
     def tpf(a: DrtExpression, g: FolExpression, s: List[FolExpression] = List()) =

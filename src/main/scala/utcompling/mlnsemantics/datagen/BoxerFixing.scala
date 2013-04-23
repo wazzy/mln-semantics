@@ -5,7 +5,7 @@ import utcompling.scalalogic.discourse.candc.boxer.expression.interpreter.impl.B
 import utcompling.scalalogic.discourse.candc.boxer.expression.interpreter.impl.OccurrenceMarkingBoxerExpressionInterpreterDecorator
 import utcompling.scalalogic.discourse.impl.BoxerDiscourseInterpreter
 import utcompling.scalalogic.discourse.candc.call.impl._
-import opennlp.scalabha.util.FileUtils
+import dhg.util.FileUtil
 
 object BoxerFixing {
 
@@ -22,8 +22,8 @@ object BoxerFixing {
 
     val boxerInterpreter =
       new BoxerDiscourseInterpreter(
-        candc = CandcImpl.findBinary(Some(FileUtils.pathjoin(System.getenv("HOME"), "bin/candc/bin"))),
-        boxer = BoxerImpl.findBinary(Some(FileUtils.pathjoin(System.getenv("HOME"), "bin/candc/bin"))))
+        candc = CandcImpl.findBinary(Some(FileUtil.pathjoin(System.getenv("HOME"), "bin/candc/bin"))),
+        boxer = BoxerImpl.findBinary(Some(FileUtil.pathjoin(System.getenv("HOME"), "bin/candc/bin"))))
    var i = 291
    for (sentence <- sts_long.drop(291)) {
       println(i)

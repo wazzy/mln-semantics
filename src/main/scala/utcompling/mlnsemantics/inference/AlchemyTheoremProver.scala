@@ -7,10 +7,10 @@ import utcompling.scalalogic.top.expression._
 import utcompling.scalalogic.base.expression._
 import utcompling.scalalogic.fol.expression._
 import utcompling.scalalogic.fol.expression.parse.FolLogicParser
-import opennlp.scalabha.util.FileUtils._
-import opennlp.scalabha.util.FileUtils
-import opennlp.scalabha.util.CollectionUtils._
-import opennlp.scalabha.util.CollectionUtil._
+import dhg.util.FileUtil._
+import dhg.util.FileUtil
+import dhg.util.CollectionUtil._
+import dhg.util.CollectionUtil._
 import utcompling.scalalogic.util.SubprocessCallable
 import utcompling.mlnsemantics.inference.support._
 
@@ -58,7 +58,7 @@ class AlchemyTheoremProver(
       assumptions,
       goal)
     val evidenceFile = makeEvidenceFile(evidence)
-    val resultFile = FileUtils.mktemp(suffix = ".res")
+    val resultFile = FileUtil.mktemp(suffix = ".res")
 
     val args = List("-ow", declarationNames.keys.mkString(","), "-q", "entailment")
 
@@ -74,8 +74,8 @@ class AlchemyTheoremProver(
     assumptions: List[WeightedFolEx],
     goal: FolExpression) = {
 
-    val tempFile = FileUtils.mktemp(suffix = ".mln")
-    FileUtils.writeUsing(tempFile) { f =>
+    val tempFile = FileUtil.mktemp(suffix = ".mln")
+    FileUtil.writeUsing(tempFile) { f =>
       constants.foreach {
         case (name, tokens) => f.write("%s = {%s}\n".format(name, tokens.map(quote).mkString(",")))
       }
@@ -144,8 +144,8 @@ class AlchemyTheoremProver(
   }
 
   private def makeEvidenceFile(evidence: List[FolExpression]) = {
-    val tempFile = FileUtils.mktemp(suffix = ".db")
-    FileUtils.writeUsing(tempFile) { f =>
+    val tempFile = FileUtil.mktemp(suffix = ".db")
+    FileUtil.writeUsing(tempFile) { f =>
       evidence.foreach {
         case e @ FolAtom(pred, args @ _*) => f.write(convert(e) + "\n")
         case e => throw new RuntimeException("Only atoms may be evidence.  '%s' is not an atom.".format(e))
@@ -154,16 +154,16 @@ class AlchemyTheoremProver(
     tempFile
   }
 
-  private def callAlchemy(mln: String, evidence: String, result: String, args: List[String] = List()): Option[String] = {
+  private def callAlchemy(mln: java.io.File, evidence: java.io.File, result: java.io.File, args: List[String] = List()): Option[String] = {
     if (LOG.isDebugEnabled) {
-      LOG.debug("mln file:\n" + readLines(mln).mkString("\n").trim)
-      LOG.debug("evidence file:\n" + readLines(evidence).mkString("\n").trim)
+      LOG.debug("mln file:\n" + mln.readLines.mkString("\n").trim)
+      LOG.debug("evidence file:\n" + evidence.readLines.mkString("\n").trim)
     }
 
-    val allArgs = "-i" :: mln :: "-e" :: evidence :: "-r" :: result :: args
+    val allArgs = "-i" :: mln.getAbsolutePath :: "-e" :: evidence.getAbsolutePath :: "-r" :: result.getAbsolutePath :: args
     val (exitcode, stdout, stderr) = callAllReturns(None, allArgs, LOG.isDebugEnabled)
 
-    val results = readLines(result).mkString("\n").trim
+    val results = result.readLines.mkString("\n").trim
 
     LOG.debug("results file:\n" + results)
 
@@ -200,7 +200,7 @@ class AlchemyTheoremProver(
 object AlchemyTheoremProver {
 
   def findBinary(binDir: Option[String] = None, envar: Option[String] = Some("ALCHEMYHOME"), verbose: Boolean = false) =
-    new AlchemyTheoremProver(FileUtils.findBinary("infer", binDir, envar, verbose))
+    new AlchemyTheoremProver(FileUtil.findBinary("infer", binDir, envar))
 
   def main(args: Array[String]) {
     val parse = new FolLogicParser().parse(_)

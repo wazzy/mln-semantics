@@ -13,8 +13,8 @@ import utcompling.scalalogic.discourse.candc.boxer.expression.BoxerExpression
 import utcompling.scalalogic.discourse.candc.boxer.expression.interpreter.impl.Boxer2DrtExpressionInterpreter
 import utcompling.mlnsemantics.inference.support._
 import utcompling.scalalogic.discourse.candc.boxer.expression.interpreter.BoxerExpressionInterpreter
-import opennlp.scalabha.util.CollectionUtils._
-import opennlp.scalabha.util.CollectionUtil._
+import dhg.util.CollectionUtil._
+import dhg.util.CollectionUtil._
 
 class TypeConvertingPTP(
   converter: BoxerExpressionInterpreter[FolExpression],

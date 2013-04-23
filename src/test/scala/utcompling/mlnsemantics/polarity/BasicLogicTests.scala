@@ -9,7 +9,7 @@ import utcompling.scalalogic.discourse.impl.BoxerDiscourseInterpreter
 import utcompling.scalalogic.discourse.candc.boxer.expression.interpreter.BoxerExpressionInterpreter
 import utcompling.scalalogic.discourse.candc.boxer.expression.interpreter.impl.Boxer2DrtExpressionInterpreter
 import utcompling.scalalogic.discourse.candc.call.impl._
-import opennlp.scalabha.util.FileUtils
+import dhg.util.FileUtil
 import org.junit.Test
 
 class BasicLogicTests {
@@ -17,9 +17,9 @@ class BasicLogicTests {
 
     val cr = new CaseRunner(
       discourseInterpreter = new BoxerDiscourseInterpreter[DrtExpression](
-        candc = CandcImpl.findBinary(Some(FileUtils.pathjoin(System.getenv("HOME"), "bin/candc/bin/"))),
-        boxer = BoxerImpl.findBinary(Some(FileUtils.pathjoin(System.getenv("HOME"), "bin/candc/bin/")))),
-      prover = new Prover9TheoremProver(FileUtils.pathjoin(System.getenv("HOME"), "bin/LADR-2009-11A/bin/prover9"), 5, false))
+        candc = CandcImpl.findBinary(Some(FileUtil.pathjoin(System.getenv("HOME"), "bin/candc/bin/"))),
+        boxer = BoxerImpl.findBinary(Some(FileUtil.pathjoin(System.getenv("HOME"), "bin/candc/bin/")))),
+      prover = new Prover9TheoremProver(FileUtil.pathjoin(System.getenv("HOME"), "bin/LADR-2009-11A/bin/prover9"), 5, false))
 
     println("quantification")
 

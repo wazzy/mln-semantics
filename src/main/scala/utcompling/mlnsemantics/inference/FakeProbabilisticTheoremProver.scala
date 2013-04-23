@@ -15,8 +15,8 @@ import utcompling.scalalogic.fol.expression.FolNegatedExpression
 import utcompling.scalalogic.fol.expression.FolOrExpression
 import utcompling.scalalogic.fol.expression.FolVariableExpression
 import utcompling.scalalogic.top.expression.Variable
-import opennlp.scalabha.util.FileUtils.pathjoin
-import opennlp.scalabha.util.FileUtils
+import dhg.util.FileUtil.pathjoin
+import dhg.util.FileUtil
 import utcompling.scalalogic.util.SubprocessCallable
 import utcompling.mlnsemantics.inference.support._
 import utcompling.scalalogic.inference.TheoremProver

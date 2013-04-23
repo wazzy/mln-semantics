@@ -14,8 +14,8 @@ import utcompling.scalalogic.discourse.candc.boxer.expression.BoxerImp
 import utcompling.scalalogic.discourse.candc.boxer.expression.BoxerPred
 import utcompling.scalalogic.discourse.candc.boxer.expression.BoxerVariable
 import utcompling.mlnsemantics.inference.support.SoftWeightedExpression
-import opennlp.scalabha.util.CollectionUtils._
-import opennlp.scalabha.util.CollectionUtil._
+import dhg.util.CollectionUtil._
+import dhg.util.CollectionUtil._
 import utcompling.scalalogic.discourse.candc.boxer.expression.interpreter.impl.OccurrenceMarkingBoxerExpressionInterpreterDecorator
 import org.apache.commons.logging.LogFactory
 

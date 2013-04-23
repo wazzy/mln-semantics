@@ -1,11 +1,11 @@
 package utcompling.mlnsemantics.datagen
 
-import opennlp.scalabha.util.FileUtils
+import dhg.util.FileUtil._
 
 class StsReader(filename: String) extends Iterable[List[String]] {
 
   override def iterator(): Iterator[List[String]] =
-    FileUtils.readLines(filename).map(_.split("\t").toList)
+    File(filename).readLines.map(_.split("\t").toList)
 
 }
 

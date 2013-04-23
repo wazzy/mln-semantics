@@ -9,7 +9,7 @@ import utcompling.scalalogic.discourse.impl.BoxerDiscourseInterpreter
 import utcompling.scalalogic.discourse.impl.CandcDiscourseParser
 import utcompling.scalalogic.discourse.DiscourseInterpreter
 import utcompling.scalalogic.discourse.DiscourseParser
-import opennlp.scalabha.util.FileUtils
+import dhg.util.FileUtil._
 import utcompling.scalalogic.discourse._
 import utcompling.scalalogic.discourse.impl._
 import utcompling.scalalogic.discourse.candc.boxer._
@@ -24,10 +24,10 @@ import utcompling.scalalogic.discourse.candc.parse.output.impl._
 import scala.collection.mutable.ListBuffer
 import utcompling.mlnsemantics.datagen._
 import utcompling.scalalogic.util.SeqUtils
-import opennlp.scalabha.util.FileUtils
+import dhg.util.FileUtil
 import utcompling.mlnsemantics.datagen.Tokenize
-import opennlp.scalabha.util.CollectionUtils._
-import opennlp.scalabha.util.CollectionUtil._
+import dhg.util.CollectionUtil._
+import dhg.util.CollectionUtil._
 
 object PolarityLexiconPreparer {
   def main(args: Array[String]): Unit = {
@@ -37,8 +37,8 @@ object PolarityLexiconPreparer {
 
     val pdi = new PrintingDiscourseInterpreter()
 
-    FileUtils.writeUsing("resources/polarity-lexicon/polarity_lexicon_expanded.txt") { f =>
-      for (line <- FileUtils.readLines("resources/polarity-lexicon/polarity_lexicon.txt")) {
+    writeUsing(File("resources/polarity-lexicon/polarity_lexicon_expanded.txt")) { f =>
+      for (line <- File("resources/polarity-lexicon/polarity_lexicon.txt").readLines) {
         val (text, comment) =
           line.split("#", 2) match {
             case Array(text, comment) => (text, comment)
@@ -81,9 +81,9 @@ object PolarityLexiconPreparer {
   class PrintingDiscourseInterpreter(
     boxerDiscourseInterpreter: DiscourseInterpreter[DrtExpression] = new BoxerDiscourseInterpreter(
       new Boxer2DrtExpressionInterpreter(),
-      CandcImpl.findBinary(Some(FileUtils.pathjoin(System.getenv("HOME"), "bin/candc/bin"))),
-      BoxerImpl.findBinary(Some(FileUtils.pathjoin(System.getenv("HOME"), "bin/candc/bin")))),
-    candcDiscourseParser: DiscourseParser[Discourse] = new CandcDiscourseParser(CandcImpl.findBinary(Some(FileUtils.pathjoin(System.getenv("HOME"), "bin/candc/bin")))))
+      CandcImpl.findBinary(Some(FileUtil.pathjoin(System.getenv("HOME"), "bin/candc/bin"))),
+      BoxerImpl.findBinary(Some(FileUtil.pathjoin(System.getenv("HOME"), "bin/candc/bin")))),
+    candcDiscourseParser: DiscourseParser[Discourse] = new CandcDiscourseParser(CandcImpl.findBinary(Some(FileUtil.pathjoin(System.getenv("HOME"), "bin/candc/bin")))))
     extends DiscourseInterpreter[Null] {
 
     override def batchInterpretMultisentence(inputs: List[List[String]], discourseIds: Option[List[String]] = None, question: Boolean = false, verbose: Boolean = false): List[Option[Null]] = {

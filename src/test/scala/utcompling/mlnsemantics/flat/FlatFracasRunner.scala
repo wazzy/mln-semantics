@@ -15,7 +15,7 @@ import utcompling.mlnsemantics.data.RtePair
 import utcompling.scalalogic.util.StringUtils._
 import utcompling.mlnsemantics.data.DataReader
 import utcompling.mlnsemantics.data.ExampleChoosingRtePairReaderDecorator
-import opennlp.scalabha.util.FileUtils
+import dhg.util.FileUtil
 import org.junit.Test
 
 class FracasTestRunner {
@@ -33,7 +33,7 @@ class FracasTestRunner {
 
   def run(reader: DataReader[RtePair]) {
 
-    val binDir = Some(FileUtils.pathjoin(System.getenv("HOME"), "bin/candc/bin"))
+    val binDir = Some(FileUtil.pathjoin(System.getenv("HOME"), "bin/candc/bin"))
     val candc = CandcImpl.findBinary(binDir)
     val boxer = BoxerImpl.findBinary(binDir)
     val bei = new MergingBoxerExpressionInterpreterDecorator()
@@ -41,7 +41,7 @@ class FracasTestRunner {
     val cdp = new CandcDiscourseParser(candc)
     val pl = PolarityLexicon.fromFile("resources/polarity-lexicon/polarity_lexicon_expanded.txt")
     val mdi = new ModalDiscourseInterpreter(bdi, cdp, pl)
-    def tp = new Prover9TheoremProver(FileUtils.pathjoin(System.getenv("HOME"), "bin/LADR-2009-11A/bin/prover9"), 5, false)
+    def tp = new Prover9TheoremProver(FileUtil.pathjoin(System.getenv("HOME"), "bin/LADR-2009-11A/bin/prover9"), 5, false)
     def mtp = new ModalTheoremProver(tp)
     def vmtp = new VisualizingModalTheoremProverDecorator(mtp)
 
